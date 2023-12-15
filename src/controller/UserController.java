@@ -56,7 +56,7 @@ public class UserController {
 				return "Age have to be between 13 and 65";
 			}
 			
-			User.create(new User(count, name, pass, coPass, age));
+			User.create(new User(count, name, pass, age));
 			return "Success";
 	}
 }

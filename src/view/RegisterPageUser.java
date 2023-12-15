@@ -4,21 +4,9 @@ import controller.UserController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class RegisterPageUser extends Application {
@@ -72,7 +60,7 @@ public class RegisterPageUser extends Application {
 		//age spinner
 		lb_UserAge = new Label("Age: ");
 		sp_UserAge = new Spinner<>(13, 65, 13);
-		
+	
 		btn_submit = new Button("Register");
 		
 		initializeMenu();
@@ -93,7 +81,7 @@ public class RegisterPageUser extends Application {
 		
 		gpane.add(lb_UserAge, 0, 4);
 		gpane.add(sp_UserAge, 1, 4);
-		
+	
 		gpane.add(btn_submit, 0, 5);
 		
 		gpane.setVgap(12);
@@ -107,10 +95,9 @@ public class RegisterPageUser extends Application {
 		
 	}
 	
-	
 	public void handling() {
 		Alert a = new Alert(AlertType.NONE);
-		 
+		
 		btn_submit.setOnAction(e->{
 			String message = UserController.registerUser(
 					tf_UserName.getText(), pf_Password.getText(), 
@@ -125,7 +112,7 @@ public class RegisterPageUser extends Application {
 			}
 		});
 		
-		menuToLogin.setOnAction(e->{	
+		menuToLogin.setOnAction(e->{
 			try {
 		        new LoginPageUser(stage);
 		        stage.show();  // Make the stage visible
