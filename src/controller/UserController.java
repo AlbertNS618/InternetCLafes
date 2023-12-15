@@ -18,11 +18,13 @@ public class UserController {
 		return false;
 	}
 	
-	public static void login(String name, String pass) {
+	public static String login(String name, String pass) {
 		if (User.checkUsernameAndPassword(name, pass)) {
 			// pindah ke home
-			System.out.println("You're logged in");
+			System.out.println("Logged In");
+			return "Logged In";
 		}
+		return "Login Error!";
 	}
 
 	public static String registerUser(String name, String pass, String coPass, int age) {
@@ -30,27 +32,22 @@ public class UserController {
 		int count = db.checkRow();
 		
 			if(name.length() < 7) {
-				System.err.println("Name must be 7 or more characters");
 				return "Name must be 7 or more characters";
 			}
 			
 			if(db.checkUsername(name)) {
-				System.err.println("Name already exists");
 				return "Name already exists";
 			}
 			
 			if(!isAlphanumeric(pass)) {
-				System.err.println("Password is not alphanumeric");
 				return "Password is not alphanumeric";
 			}
 			
 			if(pass.length() < 6) {
-				System.err.println("Password is too short(minimal length 6)");
 				return "Password is too short(minimal length 6)";
 			}
 			
 			if(!pass.equals(coPass)) {
-				System.err.println("Password doesn't match confirmation pass");
 				return "Password doesn't match confirmation pass";
 			}
 			

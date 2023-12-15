@@ -4,6 +4,7 @@ import controller.UserController;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -11,6 +12,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -81,12 +83,20 @@ public class LoginPageUser {
 
 	
 	public void setAction() {
+		Alert a = new Alert(AlertType.NONE);
 		login_btn.setOnMouseClicked(event -> {
 //			if (this.username_fl.getText().equals("bypass"))
 ////				StageManager.getInstance().setScene(new HomeView().getScene());
 //			System.out.println("User login, and redirect user");
 			
-			UserController.login(username_fl.getText(), password_pf.getText());
+			String message = UserController.login(username_fl.getText(), password_pf.getText());
+			if(message.equals("Logged In")) {
+//				new LoginPageUser(stage);		ke homepage
+			}else {
+				a.setAlertType(AlertType.ERROR);
+				a.setContentText(message);
+				a.show();	
+			}
 		});
 		
 		menuToRegister.setOnAction(e->{

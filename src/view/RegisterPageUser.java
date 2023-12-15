@@ -120,7 +120,7 @@ public class RegisterPageUser extends Application {
 				new LoginPageUser(stage);		
 			}else {
 				a.setAlertType(AlertType.ERROR);
-				a.setContentText("Registration Error");
+				a.setContentText(message);
 				a.show();	
 			}
 		});
