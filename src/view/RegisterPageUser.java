@@ -23,11 +23,10 @@ public class RegisterPageUser extends Application {
 	Menu menu;
 	MenuItem menuToLogin;
 	
-	Label TitleForm, h2lb, lb_UserName, lb_Password, lb_ConfirmPass, lb_UserAge, lb_UserRole;
+	Label TitleForm, h2lb, lb_UserName, lb_Password, lb_ConfirmPass, lb_UserAge;
 	TextField tf_UserName;
 	PasswordField pf_Password, pf_ConfirmPass;
 	Spinner<Integer> sp_UserAge;
-	ComboBox<String> cb_UserRole;
 	Button btn_submit;
 	
 	private void initializeMenu() {
@@ -61,12 +60,7 @@ public class RegisterPageUser extends Application {
 		//age spinner
 		lb_UserAge = new Label("Age: ");
 		sp_UserAge = new Spinner<>(13, 65, 13);
-		
-		//choose role
-		lb_UserRole = new Label("Role: ");
-		cb_UserRole = new ComboBox<>();
-		cb_UserRole.getItems().addAll("Admin", "Customer", "Operator", "Computer Technician");
-		
+	
 		btn_submit = new Button("Register");
 		
 		initializeMenu();
@@ -87,11 +81,8 @@ public class RegisterPageUser extends Application {
 		
 		gpane.add(lb_UserAge, 0, 4);
 		gpane.add(sp_UserAge, 1, 4);
-		
-		gpane.add(lb_UserRole, 0, 5);
-		gpane.add(cb_UserRole, 1, 5);
-		
-		gpane.add(btn_submit, 0, 6);
+	
+		gpane.add(btn_submit, 0, 5);
 		
 		gpane.setVgap(12);
 		
@@ -104,15 +95,13 @@ public class RegisterPageUser extends Application {
 		
 	}
 	
-	
 	public void handling() {
 		Alert a = new Alert(AlertType.NONE);
 		
 		btn_submit.setOnAction(e->{
 			String message = UserController.registerUser(
 					tf_UserName.getText(), pf_Password.getText(), 
-					pf_ConfirmPass.getText(), sp_UserAge.getValue(),
-					cb_UserRole.getSelectionModel().getSelectedItem()
+					pf_ConfirmPass.getText(), sp_UserAge.getValue()
 				);
 			if(message.equals("Success")) {
 				new LoginPageUser(stage);		
