@@ -1,7 +1,10 @@
 package model;
 
+import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+//import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import database.ConnectDB;
@@ -22,6 +25,14 @@ public class User {
 		UserName = userName;
 		Password = password;
 		UserAge = userAge;
+	}
+
+	public User(String userName2, String password2) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(String username2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getUserName() {
@@ -47,31 +58,96 @@ public class User {
 	public void setUserAge(Integer userAge) {
 		UserAge = userAge;
 	}
-	
-	public static boolean checkUsernameAndPassword(String name, String pass){
-		ConnectDB db = ConnectDB.getInstance();
-		boolean registered = false;
-		if(db.checkUsername(name) && db.checkPassword(pass)) {
-			registered = true;
-		}
-		
-		return registered;
-	}
 
+	static ConnectDB db = ConnectDB.getInstance();
+	static PreparedStatement ps;
 	public static void create(User user) {
 		// TODO Auto-generated method stub			
-		ConnectDB db = ConnectDB.getInstance();
 
-		db.executePrepUpdate("INSERT INTO userclafes (UserName, Password, UserAge) VALUES (?, ?, ?)", preparedStatement->{
+		db.executePrepUpdate("INSERT INTO userclafes (UserName, Password, UserAge) VALUES (?, ?, ?)", ps->{
 		try {
-			preparedStatement.setString(1, user.getUserName());
-			preparedStatement.setString(2, user.getPassword());
-			preparedStatement.setInt(3, user.getUserAge());
+			ps.setString(1, user.getUserName());
+			ps.setString(2, user.getPassword());
+			ps.setInt(3, user.getUserAge());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}); 
+	}
+	
+	public static boolean checkUsername(String username) {
+		boolean usernameExists = true;
+		
+		Vector<User> check = db.executePrepQuery("SELECT UserName FROM userclafes WHERE UserName = ?", ps->{
+			try {
+				ps.setString(1, username);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}, rs->{
+			Vector<User> result = new Vector<>();
+			try {
+				while(rs.next()) {
+					String Username = rs.getString("UserName");
+					result.add(new User(Username));
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return result;
+		});
+		
+		if(check.isEmpty()) {
+			usernameExists = false;
+		}
+//		try {
+//			ResultSet names = ps.executeQuery();
+//			String usernameCounter;
+//			while(names.next()) {
+//				usernameCounter =  names.getString("UserName");
+//				
+//				if(usernameCounter.equals(username)) {
+//					usernameExists = true;
+//				}
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	    return usernameExists;
+	}
+	
+	public static boolean checkPassword(String name, String pass) {
+		boolean passwordSame = true;
+		
+		Vector<User>check = db.executePrepQuery("SELECT * FROM userclafes WHERE UserName = ? AND Password = ?", ps->{
+			try {
+				ps.setString(1, name);
+				ps.setString(2, pass);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}, rs->{
+			Vector<User> result = new Vector<>();
+			try {
+				while(rs.next()) {
+					String Username = rs.getString("UserName");
+					String Password = rs.getString("Password");
+					result.add(new User(Username, Password));
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return result;
+		});
+		
+		if(check.isEmpty()) {
+			passwordSame = false;
+		}
+	    return passwordSame;
 	}
 	
 }

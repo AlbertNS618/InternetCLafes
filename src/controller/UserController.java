@@ -19,12 +19,22 @@ public class UserController {
 	}
 	
 	public static String login(String name, String pass) {
-		if (User.checkUsernameAndPassword(name, pass)) {
-			// pindah ke home
-			System.out.println("Logged In");
-			return "Logged In";
+		if(name.isEmpty()) {
+			return "Please enter the username";
 		}
-		return "Login Error!";
+		if(pass.isEmpty()) {
+			return "Please enter the password";
+		}
+		
+		if(!User.checkUsername(name)) {
+			return "Username doesn't exist";
+		}
+		
+		if(!User.checkPassword(name, pass)) {
+			return "Password doesn't match";
+		}
+		
+		return "Logged In";
 	}
 
 	public static String registerUser(String name, String pass, String coPass, int age) {
@@ -35,7 +45,7 @@ public class UserController {
 				return "Name must be 7 or more characters";
 			}
 			
-			if(db.checkUsername(name)) {
+			if(User.checkUsername(name)) {
 				return "Name already exists";
 			}
 			

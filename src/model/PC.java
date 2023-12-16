@@ -2,19 +2,20 @@ package model;
 
 
 public class PC {
-	 private String pcID, pcCond;
+	private int pcID;
+	 private String pcCond;
 	
-	 public PC(String pcID, String pcCond) {
+	 public PC(int pcID, String pcCond) {
 	  super();
 	  this.pcID = pcID;
 	  this.pcCond = pcCond;
 	 }
 	
-	 public String getPcID() {
+	 public int getPcID() {
 	  return pcID;
 	 }
 	
-	 public void setPcID(String pcID) {
+	 public void setPcID(int pcID) {
 	  this.pcID = pcID;
 	 }
 	
