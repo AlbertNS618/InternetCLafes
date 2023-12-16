@@ -91,7 +91,7 @@ public class LoginPageUser {
 			
 			String message = UserController.login(username_fl.getText(), password_pf.getText());
 			if(message.equals("Logged In")) {
-//				new LoginPageUser(stage);		ke homepage
+				new ViewPC(stage);
 			}else {
 				a.setAlertType(AlertType.ERROR);
 				a.setContentText(message);

@@ -91,7 +91,6 @@ public class RegisterPageUser extends Application {
 		bpane.setTop(menuBar);
 		bpane.setCenter(gpane);
 		scene = new Scene(bpane,900, 500);
-		System.out.println("Berhasil sini");
 		
 	}
 	
