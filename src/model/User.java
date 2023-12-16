@@ -15,9 +15,7 @@ public class User {
 	private String UserName;
 	private String Password;
 	private Integer UserAge;
-	
-	
-	
+
 	public User(int count, String userName, String password, Integer userAge) {
 		super();
 		counts  = new AtomicInteger(count);
@@ -25,6 +23,10 @@ public class User {
 		UserName = userName;
 		Password = password;
 		UserAge = userAge;
+	}
+	
+	public int getUserID() {
+		return UserID;
 	}
 
 	public User(String userName2, String password2) {
@@ -59,11 +61,11 @@ public class User {
 		UserAge = userAge;
 	}
 
-	static ConnectDB db = ConnectDB.getInstance();
-	static PreparedStatement ps;
+	
+	PreparedStatement ps;
 	public static void create(User user) {
 		// TODO Auto-generated method stub			
-
+		ConnectDB db = ConnectDB.getInstance();
 		db.executePrepUpdate("INSERT INTO userclafes (UserName, Password, UserAge) VALUES (?, ?, ?)", ps->{
 		try {
 			ps.setString(1, user.getUserName());
@@ -77,6 +79,7 @@ public class User {
 	}
 	
 	public static boolean checkUsername(String username) {
+		ConnectDB db = ConnectDB.getInstance();
 		boolean usernameExists = true;
 		
 		Vector<User> check = db.executePrepQuery("SELECT UserName FROM userclafes WHERE UserName = ?", ps->{
@@ -102,24 +105,12 @@ public class User {
 		if(check.isEmpty()) {
 			usernameExists = false;
 		}
-//		try {
-//			ResultSet names = ps.executeQuery();
-//			String usernameCounter;
-//			while(names.next()) {
-//				usernameCounter =  names.getString("UserName");
-//				
-//				if(usernameCounter.equals(username)) {
-//					usernameExists = true;
-//				}
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		
 	    return usernameExists;
 	}
 	
 	public static boolean checkPassword(String name, String pass) {
+		ConnectDB db = ConnectDB.getInstance();
 		boolean passwordSame = true;
 		
 		Vector<User>check = db.executePrepQuery("SELECT * FROM userclafes WHERE UserName = ? AND Password = ?", ps->{

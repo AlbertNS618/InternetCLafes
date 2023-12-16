@@ -62,7 +62,6 @@ public class UserController {
 			}
 			
 			if(age < 13 || age > 65) {
-				System.err.println("Age have to be between 13 and 65");
 				return "Age have to be between 13 and 65";
 			}
 			

@@ -2,6 +2,7 @@ package view;
 
 import controller.UserController;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -62,6 +63,7 @@ public class LoginPageUser {
 		gp.add(password_pf, 1, 3);
 		gp.add(login_btn, 0, 4);
 		
+		gp.setPadding(new Insets(15));
 		gp.setVgap(8);
 		gp.setAlignment(Pos.BASELINE_LEFT);
 		
@@ -85,10 +87,6 @@ public class LoginPageUser {
 	public void setAction() {
 		Alert a = new Alert(AlertType.NONE);
 		login_btn.setOnMouseClicked(event -> {
-//			if (this.username_fl.getText().equals("bypass"))
-////				StageManager.getInstance().setScene(new HomeView().getScene());
-//			System.out.println("User login, and redirect user");
-			
 			String message = UserController.login(username_fl.getText(), password_pf.getText());
 			if(message.equals("Logged In")) {
 				new ViewPC(stage);

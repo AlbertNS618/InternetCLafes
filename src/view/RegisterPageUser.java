@@ -2,6 +2,7 @@ package view;
 
 import controller.UserController;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -84,6 +85,7 @@ public class RegisterPageUser extends Application {
 	
 		gpane.add(btn_submit, 0, 5);
 		
+		gpane.setPadding(new Insets(15));
 		gpane.setVgap(12);
 		
 		gpane.setAlignment(Pos.BASELINE_LEFT);
@@ -136,6 +138,7 @@ public class RegisterPageUser extends Application {
 		handling();
 		this.stage = stage;
 		this.stage.setScene(scene);
+		this.stage.setTitle("InternetCLafes");
 		this.stage.show();
 	}
 	

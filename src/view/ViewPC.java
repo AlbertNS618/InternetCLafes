@@ -2,14 +2,17 @@ package view;
 
 import java.util.ArrayList;
 
+import controller.PcController;
 import database.ConnectDB;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -34,6 +37,7 @@ public class ViewPC{
 	
 	public static ArrayList<PC> listPcs = new ArrayList<PC>();
 	
+	@SuppressWarnings("unchecked")
 	public void inititialize() {
 		// TODO Auto-generated method stub
 		gp = new GridPane();
@@ -100,9 +104,20 @@ public class ViewPC{
 	}
 	
 	public void setAction() {
+		Alert a = new Alert(AlertType.NONE);
 		//logic add button
-		addbtn.setOnMouseClicked(e->{
-			
+		addbtn.setOnAction(e->{
+			String message = PcController.AddNewPC(PCid_field.getText());
+			if(message.equals("Success")){
+				a.setAlertType(AlertType.INFORMATION);
+				a.setContentText("Successfully added PC");
+				a.show();
+			}
+			else {
+				a.setAlertType(AlertType.ERROR);
+				a.setContentText(message);
+				a.show();
+			}
 		});	
 		
 		//logic del button
@@ -115,6 +130,7 @@ public class ViewPC{
 	public ViewPC(Stage stage) {
 		inititialize();
 		setStyle();
+		setAction();
 		this.stage = stage;
 		this.stage.setResizable(false);
 		this.stage.setScene(scene);
