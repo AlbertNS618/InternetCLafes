@@ -15,8 +15,10 @@ public class PC {
 	  this.pcCond = pcCond;
 	 }
 	
-	 public PC(String condition) {
+	 public PC(String pcCond) {
 		// TODO Auto-generated constructor stub
+		 super();
+		 this.pcCond = pcCond;
 	}
 
 	public int getPcID() {
