@@ -74,7 +74,8 @@ public class ViewPC{
 		PCidCol.setCellValueFactory(new PropertyValueFactory<>("pcID"));
 		PCcondiCol.setCellValueFactory(new PropertyValueFactory<>("pcCond"));
 		
-		pcList = PC.displayAllPC();
+//		pcList = PC.displayAllPC();
+		pcList = PC.getAllPC();
 		TablePC.setItems(pcList);
 		
 		PCidCol.setMinWidth(bpane.getWidth() / 2);
@@ -119,7 +120,7 @@ public class ViewPC{
 		Alert a = new Alert(AlertType.NONE);
 		//logic add button
 		addbtn.setOnMouseClicked(e->{
-			String message = PcController.AddNewPC(pcDesc_field.getText());
+			String message = PcController.AddNewPC(Integer.parseInt(PCid_field.getText()), pcDesc_field.getText());
 			if(message.equals("Success")){
 				a.setAlertType(AlertType.INFORMATION);
 				a.setContentText("Successfully added PC");

@@ -7,10 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import model.PC;
-
 public class ConnectDB {
 	private static ConnectDB instance;
 
@@ -41,25 +37,9 @@ public class ConnectDB {
 				ct = count.getInt("count");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ct;
-	}
-	
-	public ObservableList<PC> getAllPC(){
-		ObservableList<PC> pcs = FXCollections.observableArrayList();
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM pcclafes");
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				pcs.add(new PC(rs.getInt("PCid"), rs.getString("PC_cond")));
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return pcs;
 	}
 
 	public <T> Vector<T> executePrepQuery(String query, StatementPreparer preparer, ResultSetParser<T> parser) {

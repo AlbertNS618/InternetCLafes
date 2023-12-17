@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import database.ConnectDB;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class PC {
@@ -47,9 +48,10 @@ public class PC {
 	 
 	 //Main Functions
 	 public static void addPC(PC pc) {
-		 db.executePrepUpdate("INSERT INTO pcclafes (PC_cond) VALUES (?)", ps->{
+		 db.executePrepUpdate("INSERT INTO pcclafes (PCid, PC_cond) VALUES (?, ?)", ps->{
 				try {
-					ps.setString(1, pc.getPcCond());
+					ps.setInt(1, pc.getPcID());
+					ps.setString(2, pc.getPcCond());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -81,10 +83,31 @@ public class PC {
 	 }
 	 
 	 // Util Functions
-	 public static ObservableList<PC> displayAllPC(){
-		 ObservableList<PC> pcs = db.getAllPC();
-		 return pcs;
-	 }
+//	 public static ObservableList<PC> displayAllPC(){
+//		 ObservableList<PC> pcs = db.getAllPC();
+//		 return pcs;
+//	 }
+	 
+	 public static ObservableList<PC> getAllPC() {
+			ConnectDB db = ConnectDB.getInstance();
+			
+			Vector<PC> check = db.executePrepQuery("SELECT * FROM pcclafes", ps->{}, rs->{
+				Vector<PC> result = new Vector<>();
+				try {
+					while(rs.next()) {
+						int pcid = rs.getInt("PCid");
+						String pccond = rs.getString("PC_cond");
+						result.add(new PC(pcid, pccond));
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				return result;
+			});
+			ObservableList<PC> pcs = FXCollections.observableArrayList(check);
+			return pcs;
+			
+		}
 	 
 	 public static boolean checkPCID(int id) {
 			ConnectDB db = ConnectDB.getInstance();

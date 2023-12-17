@@ -4,11 +4,15 @@ import model.PC;
 
 public class PcController {
 	
-	public static String AddNewPC(String condition) {
+	public static String AddNewPC(int pcid, String condition) {
+		if(PC.checkPCID(pcid)) {
+			return "The PC already exist";
+		}
+		
 		if(!(condition.equals("Usable") || condition.equals("Maintenance") || condition.equals("Broken"))) {
 			return "The conditions must be between Usable, Maintenance, or Broken";
 		}
-		PC.addPC(new PC(condition));
+		PC.addPC(new PC(pcid, condition));
 		return "Success";
 	}
 	

@@ -1,34 +1,23 @@
 package model;
 
 import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import database.ConnectDB;
 
 public class User {
-	private static AtomicInteger counts; 
-	private static int UserID;
 	private String UserName;
 	private String Password;
 	private Integer UserAge;
 
-	public User(int count, String userName, String password, Integer userAge) {
+	public User(String userName, String password, Integer userAge) {
 		super();
-		counts  = new AtomicInteger(count);
-		UserID = counts.incrementAndGet();
 		UserName = userName;
 		Password = password;
 		UserAge = userAge;
 	}
 	
-	public int getUserID() {
-		return UserID;
-	}
-
 	public User(String userName2, String password2) {
 		// TODO Auto-generated constructor stub
 	}
