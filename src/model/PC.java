@@ -2,8 +2,10 @@ package model;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import database.ConnectDB;
+import javafx.collections.ObservableList;
 
 public class PC {
 	private int pcID;
@@ -19,6 +21,10 @@ public class PC {
 		// TODO Auto-generated constructor stub
 		 super();
 		 this.pcCond = pcCond;
+	}
+
+	public PC(int pcid2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getPcID() {
@@ -38,6 +44,8 @@ public class PC {
 	 
 	 static ConnectDB db = ConnectDB.getInstance();
 	 static PreparedStatement ps;
+	 
+	 //Main Functions
 	 public static void addPC(PC pc) {
 		 db.executePrepUpdate("INSERT INTO pcclafes (PC_cond) VALUES (?)", ps->{
 				try {
@@ -50,7 +58,7 @@ public class PC {
 	 }
 	 
 	 public static void deletePC(int id) {
-		 db.executePrepUpdate("INSERT FROM pcclafes WHERE PCid = ?", ps->{
+		 db.executePrepUpdate("DELETE FROM pcclafes WHERE PCid = ?", ps->{
 				try {
 					ps.setInt(1, id);
 				} catch (SQLException e) {
@@ -71,5 +79,42 @@ public class PC {
 				}
 		}); 
 	 }
+	 
+	 // Util Functions
+	 public static ObservableList<PC> displayAllPC(){
+		 ObservableList<PC> pcs = db.getAllPC();
+		 return pcs;
+	 }
+	 
+	 public static boolean checkPCID(int id) {
+			ConnectDB db = ConnectDB.getInstance();
+			boolean pcExists = true;
+			
+			Vector<PC> check = db.executePrepQuery("SELECT PCid FROM pcclafes WHERE PCid = ?", ps->{
+				try {
+					ps.setInt(1, id);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}, rs->{
+				Vector<PC> result = new Vector<>();
+				try {
+					while(rs.next()) {
+						int pcid = rs.getInt("PCid");
+						result.add(new PC(pcid));
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				return result;
+			});
+			
+			if(check.isEmpty()) {
+				pcExists = false;
+			}
+			
+		    return pcExists;
+		}
 	 
 }
